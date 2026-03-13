@@ -3,6 +3,7 @@ export interface Scenario {
   current_stock: Record<string, number>
   min_stock: Record<string, number>
   target_stock: Record<string, number>
+  transferable_stock: Record<string, number>
   price: number
   transport_costs: Record<string, Record<string, number>>
 }

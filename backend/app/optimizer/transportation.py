@@ -12,13 +12,15 @@ def optimizare_retea_stocuri(
     stoc_curent: dict[str, int],
     stoc_minim: dict[str, int],
     stoc_tinta: dict[str, int],
+    stoc_disponibil_transfer: dict[str, int],
     pret_produs: float,
     costuri_transport: dict[str, dict[str, float]],
 ) -> dict[str, Any]:
     """
     Rezolvă problema de redistribuire a stocurilor pentru a maximiza profitul net.
-    Stoc țintă (stoc_tinta) = nivelul dorit după redistribuire; transportăm până la acest nivel,
-    nu doar până la minim, astfel încât la prima vânzare filiala să nu reintre în deficit.
+    Stoc țintă (stoc_tinta) = nivelul dorit după redistribuire.
+    Stoc disponibil transfer = doar produsele învechite (ex. 30+ zile) pot fi trimise;
+    utilizatorul introduce manual câte unități din surplus sunt eligibile pentru transfer.
     Returns a structured dict suitable for API response.
     """
     surplus: dict[str, int] = {}
@@ -33,8 +35,14 @@ def optimizare_retea_stocuri(
         elif cur < tinta:
             deficit[f] = tinta - cur
 
-    # Validare fezabilitate
-    if sum(surplus.values()) < sum(deficit.values()):
+    # Capacitate transfer: min(surplus, stoc_disponibil_transfer) pentru filialele cu surplus
+    transfer_capacity: dict[str, int] = {}
+    for i in surplus:
+        disp = stoc_disponibil_transfer.get(i, surplus[i])
+        transfer_capacity[i] = min(surplus[i], max(0, disp))
+
+    # Validare fezabilitate (capacitatea transferabilă <= cererea)
+    if sum(transfer_capacity.values()) < sum(deficit.values()):
         return {
             "status": "infeasible",
             "error": "Deficitul total este mai mare decât surplusul disponibil în rețea.",
@@ -80,9 +88,9 @@ def optimizare_retea_stocuri(
         ]
     ), "Profit_Total"
 
-    # Constrângeri
+    # Constrângeri: trimitem doar din stocul disponibil pentru transfer (ex. 30+ zile)
     for i in surplus:
-        model += pulp.lpSum([x[(i, j)] for j in deficit]) <= surplus[i], f"Max_Surplus_{i}"
+        model += pulp.lpSum([x[(i, j)] for j in deficit]) <= transfer_capacity[i], f"Max_Transfer_{i}"
     for j in deficit:
         model += pulp.lpSum([x[(i, j)] for i in surplus]) == deficit[j], f"Exact_Deficit_{j}"
 

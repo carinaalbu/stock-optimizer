@@ -10,6 +10,10 @@ class OptimizeRequest(BaseModel):
     target_stock: dict[str, int] = Field(
         ..., description="Stoc țintă per filială (nivel dorit după redistribuire, >= minim)"
     )
+    transferable_stock: dict[str, int] = Field(
+        ...,
+        description="Stoc disponibil pentru transfer per filială (ex. produse 30+ zile nevinzute)",
+    )
     price: float = Field(..., gt=0, description="Preț pe produs (RON)")
     transport_costs: dict[str, dict[str, float]] = Field(
         ..., description="Matrice costuri transport: {from_branch: {to_branch: cost}}"

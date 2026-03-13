@@ -18,7 +18,7 @@ export default function App() {
         return r.json()
       })
       .then((data) => {
-        if (!data?.branches?.length || !data?.target_stock) {
+        if (!data?.branches?.length || !data?.target_stock || !data?.transferable_stock) {
           throw new Error('Răspuns invalid de la server.')
         }
         setScenario(data)

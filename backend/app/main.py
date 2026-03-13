@@ -18,6 +18,7 @@ DEFAULT_BRANCHES = ["Bucuresti", "Cluj", "Iasi", "Timisoara"]
 DEFAULT_CURRENT_STOCK = {"Bucuresti": 120, "Cluj": 15, "Iasi": 50, "Timisoara": 10}
 DEFAULT_MIN_STOCK = {"Bucuresti": 40, "Cluj": 30, "Iasi": 20, "Timisoara": 25}
 DEFAULT_TARGET_STOCK = {"Bucuresti": 40, "Cluj": 45, "Iasi": 20, "Timisoara": 35}
+DEFAULT_TRANSFERABLE_STOCK = {"Bucuresti": 80, "Cluj": 0, "Iasi": 30, "Timisoara": 0}
 DEFAULT_PRICE = 200.0
 DEFAULT_TRANSPORT_COSTS = {
     "Bucuresti": {"Cluj": 15, "Iasi": 20, "Timisoara": 20},
@@ -35,6 +36,7 @@ def get_default_scenario():
         "current_stock": DEFAULT_CURRENT_STOCK,
         "min_stock": DEFAULT_MIN_STOCK,
         "target_stock": DEFAULT_TARGET_STOCK,
+        "transferable_stock": DEFAULT_TRANSFERABLE_STOCK,
         "price": DEFAULT_PRICE,
         "transport_costs": DEFAULT_TRANSPORT_COSTS,
     }
@@ -51,12 +53,15 @@ def optimize(req: OptimizeRequest):
             raise HTTPException(400, f"Lipsește stocul minim pentru filiala '{b}'")
         if b not in req.target_stock:
             raise HTTPException(400, f"Lipsește stocul țintă pentru filiala '{b}'")
+        if b not in req.transferable_stock:
+            raise HTTPException(400, f"Lipsește stocul disponibil transfer pentru filiala '{b}'")
 
     raw = optimizare_retea_stocuri(
         filiale=req.branches,
         stoc_curent=req.current_stock,
         stoc_minim=req.min_stock,
         stoc_tinta=req.target_stock,
+        stoc_disponibil_transfer=req.transferable_stock,
         pret_produs=req.price,
         costuri_transport=req.transport_costs,
     )
