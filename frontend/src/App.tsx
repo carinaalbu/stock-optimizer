@@ -86,7 +86,6 @@ export default function App() {
     <div className="app">
       <header>
         <h1>Optimizator Redistribuire Stocuri</h1>
-        <p>Introduceți datele și calculați planul de transfer pentru profit maxim.</p>
       </header>
       {scenario && (
         <ScenarioForm
