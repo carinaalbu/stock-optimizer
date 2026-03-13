@@ -76,7 +76,7 @@ Open http://localhost:5173 in your browser.
 
 1. The app loads a default scenario (București, Cluj, Iași, Timișoara) with sample stock and transport costs.
 2. Edit **stoc curent** and **stoc minim** per branch, and the product **preț**.
-3. Click **Editează matricea de costuri transport** to adjust transport costs between branches.
+3. Click **Prețuri Transport** to adjust transport costs between branches.
 4. Click **Calculează planul optim** to run the optimization.
 5. View the redistribution plan and estimated profit.
 
