@@ -1,0 +1,269 @@
+:root {
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #fff;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: rgba(170, 59, 255, 0.5);
+  --error: #dc2626;
+  --success: #16a34a;
+
+  font: 18px/145% system-ui, 'Segoe UI', Roboto, sans-serif;
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #9ca3af;
+    --text-h: #f3f4f6;
+    --bg: #16171d;
+    --border: #2e303a;
+    --code-bg: #1f2028;
+    --accent: #c084fc;
+    --accent-bg: rgba(192, 132, 252, 0.15);
+    --accent-border: rgba(192, 132, 252, 0.5);
+  }
+}
+
+body {
+  margin: 0;
+}
+
+#app {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.app header {
+  margin-bottom: 24px;
+}
+
+.app header h1 {
+  font-size: 28px;
+  margin: 0 0 8px;
+  color: var(--text-h);
+}
+
+.app header p {
+  margin: 0;
+  color: var(--text);
+}
+
+.scenario-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.scenario-form section {
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--code-bg);
+}
+
+.scenario-form h2 {
+  font-size: 18px;
+  margin: 0 0 12px;
+  color: var(--text-h);
+}
+
+.scenario-form .hint {
+  font-size: 14px;
+  color: var(--text);
+  margin: 0 0 12px;
+  opacity: 0.9;
+}
+
+.branch-add {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.branch-add input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.branch-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.branch-list li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.branch-list button {
+  padding: 0 6px;
+  font-size: 18px;
+  line-height: 1;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.branch-list button:hover:not(:disabled) {
+  color: var(--error);
+}
+
+.branch-list button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.stock-table,
+.cost-matrix {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.stock-table th,
+.stock-table td,
+.cost-matrix th,
+.cost-matrix td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid var(--border);
+}
+
+.stock-table input,
+.cost-matrix input {
+  width: 80px;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.cost-matrix-wrap {
+  overflow-x: auto;
+  margin-top: 12px;
+}
+
+.cost-matrix .na {
+  color: var(--text);
+  opacity: 0.6;
+}
+
+.toggle-matrix {
+  padding: 8px 16px;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  border-radius: 6px;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.toggle-matrix:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.scenario-form button[type='submit'] {
+  padding: 12px 24px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.scenario-form button[type='submit']:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.scenario-form button[type='submit']:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.scenario-form .error {
+  color: var(--error);
+  margin: 0;
+}
+
+.results-panel {
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--code-bg);
+}
+
+.results-panel h2 {
+  font-size: 20px;
+  margin: 0 0 16px;
+  color: var(--text-h);
+}
+
+.results-panel h3 {
+  font-size: 16px;
+  margin: 12px 0 8px;
+  color: var(--text-h);
+}
+
+.total-profit {
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.result-status.infeasible,
+.result-status.validation_error,
+.result-status.solver_failed {
+  color: var(--error);
+  margin-bottom: 12px;
+}
+
+.surplus-deficit ul,
+.transfer-summary {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.surplus-deficit li,
+.transfer-summary li {
+  padding: 4px 0;
+}
+
+.results-panel table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.results-panel th,
+.results-panel td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid var(--border);
+}
+
+.transfer-summary {
+  margin-top: 12px;
+}
