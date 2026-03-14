@@ -19,6 +19,9 @@ export default function ScenarioForm({
   const [newBranch, setNewBranch] = useState("");
   const [showCostMatrix, setShowCostMatrix] = useState(false);
 
+  const displayNumber = (value: number | undefined) =>
+    value && value > 0 ? String(value) : "";
+
   const addBranch = () => {
     const name = newBranch.trim();
     if (!name) return;
@@ -214,8 +217,9 @@ export default function ScenarioForm({
                 type="number"
                 min={0}
                 step={0.01}
-                value={scenario.price}
+                value={displayNumber(scenario.price)}
                 onChange={(e) => updatePrice(parseFloat(e.target.value) || 0)}
+                placeholder="Introduceți prețul"
               />
             </label>
           </section>
@@ -279,39 +283,42 @@ export default function ScenarioForm({
                         <input
                           type="number"
                           min={0}
-                          value={scenario.current_stock[b] ?? 0}
+                          value={displayNumber(scenario.current_stock[b])}
                           onChange={(e) =>
                             updateCurrentStock(b, parseInt(e.target.value, 10) || 0)
                           }
+                          placeholder="0"
                         />
                       </td>
                       <td>
                         <input
                           type="number"
                           min={0}
-                          value={scenario.min_stock[b] ?? 0}
+                          value={displayNumber(scenario.min_stock[b])}
                           onChange={(e) =>
                             updateMinStock(b, parseInt(e.target.value, 10) || 0)
                           }
+                          placeholder="0"
                         />
                       </td>
                       <td>
                         <input
                           type="number"
                           min={0}
-                          value={
-                            scenario.target_stock[b] ?? scenario.min_stock[b] ?? 0
-                          }
+                          value={displayNumber(
+                            scenario.target_stock[b] ?? scenario.min_stock[b],
+                          )}
                           onChange={(e) =>
                             updateTargetStock(b, parseInt(e.target.value, 10) || 0)
                           }
+                          placeholder="0"
                         />
                       </td>
                       <td>
                         <input
                           type="number"
                           min={0}
-                          value={scenario.transferable_stock[b] ?? 0}
+                          value={displayNumber(scenario.transferable_stock[b])}
                           onChange={(e) =>
                             updateTransferableStock(
                               b,
@@ -319,6 +326,7 @@ export default function ScenarioForm({
                             )
                           }
                           title="Doar aceste unități pot fi trimise către alte filiale"
+                          placeholder="0"
                         />
                       </td>
                     </tr>
@@ -359,7 +367,7 @@ export default function ScenarioForm({
                                 type="number"
                                 min={0}
                                 step={0.01}
-                                value={scenario.transport_costs[from]?.[to] ?? ""}
+                                value={displayNumber(scenario.transport_costs[from]?.[to])}
                                 onChange={(e) =>
                                   updateTransportCost(
                                     from,
@@ -367,6 +375,7 @@ export default function ScenarioForm({
                                     parseFloat(e.target.value) || 0,
                                   )
                                 }
+                                placeholder="0"
                               />
                             )}
                           </td>

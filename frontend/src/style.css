@@ -132,6 +132,17 @@ button {
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
+.scenario-form input[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.scenario-form input[type='number']::-webkit-outer-spin-button,
+.scenario-form input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .scenario-form input:focus {
   outline: none;
   border-color: var(--accent);
